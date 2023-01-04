@@ -49,9 +49,16 @@ app.get('/result', async (req, res) => {
     await moveAllFiles(files, folderName, res).then(() => {
         console.log('🔥 All files have been moved!');
     }).catch((error) => {
-        res.render('error', {
-            error: error
-        })
+        if (error.message.includes('Increasing the number of parents is not allowed')) {
+            res.render('error', {
+                error: 'A duplicate/moved file was found, please remove duplicate/moved file from the list'
+            })
+        }
+        else {
+            res.render('error', {
+                error: error
+            })
+        }
     });
 });
 
