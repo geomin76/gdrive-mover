@@ -1,0 +1,28 @@
+<%- include("./partial/header") %>
+    <script>
+        function myFunction() {
+            document.getElementById("postclick").innerHTML += "<p>Please wait while files are moving<div class='loader'></div></p>;"
+        }
+    </script>
+    <p>Step 1. Share your folder with photos with this email: <a
+            href="#">gdriver-mover@grdrive-mover.iam.gserviceaccount.com</a></p>
+    <img src="https://website-photos-geomin.s3.amazonaws.com/Screen+Shot+2023-01-04+at+11.52.10+AM.png" width="30%">
+    <form action="/" method="POST">
+        <label>
+            <p>Step 2. Add your folder id here:</p>
+        </label>
+        <input type="text" placeholder="Folder ID" name="folder" size="50"><br><br>
+        <img src="https://website-photos-geomin.s3.amazonaws.com/Screen+Shot+2023-01-04+at+10.02.28+AM.png" width="30%">
+        <label><p>Step 3: Add your list of photos here, separated by commas, space and/or new line</p></label>
+        <br />
+        <p>Add suffix/prefix</p>
+        <br />
+        <textarea id="list" name="list" rows="20" cols="50"></textarea>
+        <br />
+        <br />
+        <br />
+        <button onclick="myFunction()">Submit</button>
+        <p id="postclick"></p>
+    </form>
+
+    <%- include("./partial/footer") %>
