@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const serverless = require('serverless-http');
 
 const moveAllFiles = require('./service');
 var bodyParser = require("body-parser");
@@ -63,4 +64,5 @@ app.get('/result', async (req, res) => {
 });
 
 
-app.listen(PORT, console.log("Server started for port: " + PORT))
+module.exports.handler = serverless(app);
+// app.listen(PORT, console.log("Server started for port: " + PORT))
