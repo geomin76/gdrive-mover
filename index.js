@@ -23,6 +23,10 @@ app.post("/", function (req, res) {
     req.session.folder = folder;
     var list = req.body.list;
     req.session.list = list;
+    var prefix = req.body.prefix;
+    req.session.prefix = prefix;
+    var suffix = req.body.suffix;
+    req.session.suffix = suffix;
 
     res.redirect('/result')
 });
@@ -36,11 +40,18 @@ app.get('/result', async (req, res) => {
 
     var files = req.session.list.split(/,\s*|\s+/);
     var folderName = req.session.folder.trim().replace(/\s/g, "")
+    var prefix = req.session.prefix.trim().replace(/\s/g, "")
+    var suffix = req.session.suffix.trim().replace(/\s/g, "")
+    for (var i = 0; i < files.length; i++) {
+        files[i] = (prefix + files[i] + suffix).trim().replace(/\s/g, "")
+    }
 
     await moveAllFiles(files, folderName, res).then(() => {
         console.log('🔥 All files have been moved!');
     }).catch((error) => {
-        console.error(error)
+        res.render('error', {
+            error: error
+        })
     });
 });
 
