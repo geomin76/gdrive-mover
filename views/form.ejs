@@ -1,9 +1,18 @@
 <%- include("./partial/header") %>
+    <p>ADD PHOTO HERE</p>
+    <p>Step 1. Share your folder with photos with this email: <a href="#">gdriver-mover@grdrive-mover.iam.gserviceaccount.com</a></p>
     <form action="/" method="POST">
-        <label>Username: </label>
-        <input type="text" placeholder="Name" name="username"><br><br>
-        <label>Email: </label>
-        <input type="email" placeholder="Email" name="email"><br><br>
+        <p>ADD PHOTO HERE</p>
+        <label><p>Step 2. Add your folder id here:</p></label>
+        <input type="text" placeholder="Folder ID" name="folder"><br><br>
+        <label>Step 3: Add your list of photos here, separated by commas, space or new line</label>
+        <br/>
+        <p>Add suffix/prefix</p>
+        <br/>
+        <textarea id="list" name="list" rows="20" cols="50"></textarea>
+        <br/>
+        <br/>
+        <br/>
         <button>Submit</button>
     </form>
 <%- include("./partial/footer") %>

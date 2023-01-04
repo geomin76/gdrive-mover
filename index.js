@@ -9,7 +9,7 @@ var bodyParser=require("body-parser");
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 
-// moveAllFiles(['DSC01554.ARW', 'DSC01553.ARW'], '1nIK4qNQ4VDIjoY99rNJEdJ0uBIYGlKsw').then(() => {
+// moveAllFiles(['DSC01552.ARW'], '1nIK4qNQ4VDIjoY99rNJEdJ0uBIYGlKsw').then(() => {
 //   console.log('🔥 All files have been moved!');
 // }).catch((error) => {
 //     console.error(error)
@@ -28,10 +28,11 @@ app.get('/result',(req,res)=>{
   
 //creating form
 app.post("/",function(req,res){
-    var username=req.body.username;
-    console.log(username);
-    var email=req.body.email;
+    var folderId = req.body.folder;
+    console.log(folderId)
+    var list = req.body.list;
+    console.log(list)
     res.redirect("/result");
 });
 
-app.listen(PORT, console.log("Server don start for port: " + PORT))
+app.listen(PORT, console.log("Server started for port: " + PORT))
