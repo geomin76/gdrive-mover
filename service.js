@@ -1,15 +1,18 @@
-const fs = require('fs');
-const path = require('path');
 const { google } = require('googleapis');
 const process = require('process');
+require('dotenv').config()
 
-const KEYFILEPATH = path.join(process.cwd(), 'creds.json');
+
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
 
 const auth = new google.auth.GoogleAuth({
-    keyFile: KEYFILEPATH,
+    credentials: {
+        client_email: process.env.CLIENT_EMAIL,
+        private_key: process.env.PRIVATE_KEY.replace(/\\n/gm, '\n')
+    },
     scopes: SCOPES,
 });
+
 const service = google.drive({ version: 'v3', auth });
 
 const findFileId = async (fileName) => {
