@@ -20,6 +20,10 @@ const findFileId = async (fileName) => {
         spaces: 'drive',
     });
 
+    if (res.data.files.length == 0) {
+        return null;
+    }
+
     return res.data.files[0].id
 }
 
@@ -31,7 +35,7 @@ const moveFiles = async (fileId, currentFolderId, newFolderId) => {
         fields: 'id, parents',
         enforceSingleParent: true
     });
-    console.log(files.status);
+    return files.status;
 }
 
 const createFolder = async (currentFolderId) => {
@@ -51,13 +55,24 @@ const createFolder = async (currentFolderId) => {
     return folder.data.id;
 }
 
-const moveAllFiles = async (fileList, currentFolderId) => {
+const moveAllFiles = async (fileList, currentFolderId, res) => {
+    const statuses = []
     const folderId = await createFolder(currentFolderId);
-    fileList.forEach(function(fileName, index) {
-        findFileId(fileName).then((fileId) => {
-            moveFiles(fileId, currentFolderId, folderId);
+    for (const fileName of fileList) {
+        await findFileId(fileName).then(async (fileId) => {
+            if (!fileId) {
+                statuses.push({ "fileName": fileName, "status": 404 })
+            }
+            else {
+                await moveFiles(fileId, currentFolderId, folderId).then((status) => {
+                    statuses.push({ "fileName": fileName, "status": status })
+                })
+            }
         });
-    })
+    }
+    res.render('result', {
+        data: statuses
+    });
 }
 
 module.exports = moveAllFiles;

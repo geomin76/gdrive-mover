@@ -1,3 +1,21 @@
 <%- include("./partial/header") %>
-    <h1>yay</h1>
-<%- include("./partial/footer") %>
+    <h1>Operation successful!</h1>
+    <table>
+        <% for(var i=0; i < data.length; i++) { %>
+            <tr>
+                <td>
+                    <%= data[i].fileName %>
+                </td>
+                <td>
+                    <% if (data[i].status==200) { %>
+                        <p>✅</p>
+                    <%} else if (data[i].status==404) { %>
+                        <p>❌ File does not exist</p>
+                    <% } else { %>
+                        <p>❌ Moving was not successful</p>
+                    <% } %>
+                </td>
+            </tr>
+            <% } %>
+    </table>
+    <%- include("./partial/footer") %>

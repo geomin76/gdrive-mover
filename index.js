@@ -27,17 +27,21 @@ app.post("/", function (req, res) {
     res.redirect('/result')
 });
 
-app.get('/result', (req, res) => {
-    console.log(req.session.folder)
-    console.log(req.session.list)
-    moveAllFiles(req.session.list, req.session.folder).then(() => {
-      console.log('🔥 All files have been moved!');
+app.get('/result', async (req, res) => {
+    if (!req.session.folder || !req.session.list) {
+        res.render('error', {
+            error: "folder or list is empty"
+        })
+    }
+
+    var files = req.session.list.split(/,\s*|\s+/);
+    var folderName = req.session.folder.trim().replace(/\s/g, "")
+
+    await moveAllFiles(files, folderName, res).then(() => {
+        console.log('🔥 All files have been moved!');
     }).catch((error) => {
         console.error(error)
     });
-    res.render('result');
-
-    // try to render results with progress bar, is that possible?
 });
 
 
