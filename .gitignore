@@ -92,3 +92,4 @@ Thumbs.db
 
 creds.json
 .DS_Store
+.azure
