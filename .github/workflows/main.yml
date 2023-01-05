@@ -1,0 +1,33 @@
+name: PROD DEPLOY
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push but only for the "main" branch
+  push:
+    branches: ["main"]
+
+env:
+  AZURE_WEBAPP_NAME: gdrive-mover   # set this to your application's name
+  NODE_VERSION: '14.19.0'                # set this to the node version to use
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: npm install and build
+      run: |
+        # Build and test the project, then
+        # deploy to Azure Web App.
+        npm install
+        npm run build --if-present
+    - name: 'Deploy to Azure WebApp'
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
